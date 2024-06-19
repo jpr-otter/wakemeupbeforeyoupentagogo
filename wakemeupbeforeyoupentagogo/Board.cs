@@ -52,9 +52,9 @@ namespace Pentago
 
             foreach (Button[] squares in rectButton)
             {
-                foreach (Button ball in squares)
+                foreach (Button stone in squares)
                 {
-                    ball.IsEnabled = false;
+                    stone.IsEnabled = false;
                 }
             }
         }
@@ -63,9 +63,9 @@ namespace Pentago
 
             foreach (Button[] squares in rectButton)
             {
-                foreach (Button ball in squares)
+                foreach (Button stone in squares)
                 {
-                    ball.IsEnabled = true;
+                    stone.IsEnabled = true;
                 }
             }
         }
@@ -114,25 +114,41 @@ namespace Pentago
                     rectButton[square][index++].Background = copySquare[row + col];
                 }
             }
-        }
-
+        }        
 
         public bool CheckWinningCondition(Brush color)
         {
-            // Check horizontal and vertical lines
-            for (int i = 0; i < 6; i++)
+            
+            for (int row = 0; row < 6; row++)
             {
-                if (CheckLine(color, i * 6, 1) || CheckLine(color, i, 6))
-                    return true;
+                for (int col = 0; col <= 1; col++)
+                {
+                    if (CheckLine(color, row * 6 + col, 1))
+                        return true;
+                }
             }
 
-            // Check diagonal lines
-            if (CheckLine(color, 0, 7) || CheckLine(color, 4, 5))
-                return true;
+            
+            for (int col = 0; col < 6; col++)
+            {
+                for (int row = 0; row <= 1; row++) 
+                {
+                    if (CheckLine(color, row * 6 + col, 6))
+                        return true;
+                }
+            }
 
-            // Check anti-diagonal lines
-            if (CheckLine(color, 2, 5) || CheckLine(color, 6, 7))
-                return true;
+            
+            for (int row = 0; row <= 1; row++)
+            {
+                for (int col = 0; col <= 1; col++)
+                {
+                    if (CheckLine(color, row * 6 + col, 7))
+                        return true;
+                    if (CheckLine(color, row * 6 + (5 - col), 5))
+                        return true;
+                }
+            }
 
             return false;
         }
@@ -146,19 +162,17 @@ namespace Pentago
                 if (allRects[startIndex + i * step].Background == color)
                 {
                     stoneInPosition++;
+                    if (stoneInPosition == 5) 
+                        return true;
                 }
                 else
                 {
                     stoneInPosition = 0;
                 }
-
-                if (stoneInPosition == 5)
-                    return true;
             }
 
             return false;
         }
-
 
         public bool IsBoardFull()
         {
@@ -203,9 +217,9 @@ namespace Pentago
         public void RestartGame(bool restartGame)
         {
             MainWindow.BlackMovement = false;
-            foreach (Button ball in allRects)
+            foreach (Button stone in allRects)
             {
-                ball.Background = Brushes.Transparent;
+                stone.Background = Brushes.Transparent;
             }
             MainWindow.HideArrows();
             if (restartGame)
@@ -258,18 +272,18 @@ namespace Pentago
 
         private bool CheckWinnerWhite()
         {
-            foreach (Button ball in allRects)
+            foreach (Button stone in allRects)
             {
-                if (ball.Background == Brushes.Transparent)
+                if (stone.Background == Brushes.Transparent)
                 {
-                    ball.Background = Brushes.White;
+                    stone.Background = Brushes.White;
                     for (int i = 0; i < 4; i++)
                     {
                         Rotation("counterclockwise", i);
                         if (CheckWinningCondition(Brushes.White))
                         {
                             Rotation("clockwise", i);
-                            ball.Background = Brushes.Transparent;
+                            stone.Background = Brushes.Transparent;
                             return true;
                         }
                         else
@@ -279,7 +293,7 @@ namespace Pentago
                             if (CheckWinningCondition(Brushes.Black))
                             {
                                 Rotation("counterclockwise", i);
-                                ball.Background = Brushes.Transparent;
+                                stone.Background = Brushes.Transparent;
                                 return true;
                             }
                             else
@@ -289,7 +303,7 @@ namespace Pentago
                             }
                         }
                     }
-                    ball.Background = Brushes.Transparent;
+                    stone.Background = Brushes.Transparent;
                 }
             }
             return false;
@@ -309,11 +323,11 @@ namespace Pentago
                 Rotation("counterclockwise", blackMoveRotation[1]);
             }
             bool notWin;
-            foreach (Button Blackball in allRects)
+            foreach (Button BlackStone in allRects)
             {
-                if (Blackball.Background == Brushes.Transparent)
+                if (BlackStone.Background == Brushes.Transparent)
                 {
-                    Blackball.Background = Brushes.Black;
+                    BlackStone.Background = Brushes.Black;
                     for (int j = 0; j < 4; j++)
                     {
                         notWin = true;
@@ -328,11 +342,11 @@ namespace Pentago
                                 Rotation("counterclockwise", j);
                                 Rotation("counterclockwise", j);
                             }
-                            foreach (Button Whiteball in allRects)
+                            foreach (Button WhiteStone in allRects)
                             {
-                                if (Whiteball.Background == Brushes.Transparent)
+                                if (WhiteStone.Background == Brushes.Transparent)
                                 {
-                                    Whiteball.Background = Brushes.White;
+                                    WhiteStone.Background = Brushes.White;
                                     for (int i = 0; i < 4; i++)
                                     {
                                         Rotation("counterclockwise", i);
@@ -352,7 +366,7 @@ namespace Pentago
                                             Rotation("counterclockwise", i);
                                         }
                                     }
-                                    Whiteball.Background = Brushes.Transparent;
+                                    WhiteStone.Background = Brushes.Transparent;
                                 }
                             }
                             if (notWin == true)
@@ -366,7 +380,7 @@ namespace Pentago
 
                         }
                     }
-                    Blackball.Background = Brushes.Transparent;
+                    BlackStone.Background = Brushes.Transparent;
                 }
             }
             blackMoveButton.Background = Brushes.Black;
@@ -375,11 +389,11 @@ namespace Pentago
 
         public bool BlackWins()
         {
-            foreach (Button ball in allRects)
+            foreach (Button stone in allRects)
             {
-                if (ball.Background == Brushes.Transparent)
+                if (stone.Background == Brushes.Transparent)
                 {
-                    ball.Background = Brushes.Black;
+                    stone.Background = Brushes.Black;
                     for (int i = 0; i < 4; i++)
                     {
                         Rotation("counterclockwise", i);
@@ -402,7 +416,7 @@ namespace Pentago
                             }
                         }
                     }
-                    ball.Background = Brushes.Transparent;
+                    stone.Background = Brushes.Transparent;
                 }
             }
             return false;
@@ -436,12 +450,11 @@ namespace Pentago
 
         private bool CheckAndCompleteLine(int index, Brush colorInLine)
         {
-            // Define the patterns to check for a three-in-line condition
             int[][] patterns = new int[][]
             {
-                new[] { 0, 1, 2 }, new[] { 3, 4, 5 }, new[] { 6, 7, 8 }, // Rows
-                new[] { 0, 3, 6 }, new[] { 1, 4, 7 }, new[] { 2, 5, 8 }, // Columns
-                new[] { 0, 4, 8 }, new[] { 2, 4, 6 }                      // Diagonals
+                new[] { 0, 1, 2 }, new[] { 3, 4, 5 }, new[] { 6, 7, 8 }, 
+                new[] { 0, 3, 6 }, new[] { 1, 4, 7 }, new[] { 2, 5, 8 }, 
+                new[] { 0, 4, 8 }, new[] { 2, 4, 6 }                      
             };
 
             foreach (var pattern in patterns)

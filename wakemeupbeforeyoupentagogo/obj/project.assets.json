@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Jenny\\source\\repos\\wakemeupbeforeyoupentagogo\\wakemeupbeforeyoupentagogo\\wakemeupbeforeyoupentagogo.csproj",
+      "projectUniqueName": "C:\\Users\\Jenny\\Source\\Repos\\wakemeupbeforeyoupentagogo2\\wakemeupbeforeyoupentagogo\\wakemeupbeforeyoupentagogo.csproj",
       "projectName": "wakemeupbeforeyoupentagogo",
-      "projectPath": "C:\\Users\\Jenny\\source\\repos\\wakemeupbeforeyoupentagogo\\wakemeupbeforeyoupentagogo\\wakemeupbeforeyoupentagogo.csproj",
+      "projectPath": "C:\\Users\\Jenny\\Source\\Repos\\wakemeupbeforeyoupentagogo2\\wakemeupbeforeyoupentagogo\\wakemeupbeforeyoupentagogo.csproj",
       "packagesPath": "C:\\Users\\Jenny\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Jenny\\source\\repos\\wakemeupbeforeyoupentagogo\\wakemeupbeforeyoupentagogo\\obj\\",
+      "outputPath": "C:\\Users\\Jenny\\Source\\Repos\\wakemeupbeforeyoupentagogo2\\wakemeupbeforeyoupentagogo\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Jenny\\AppData\\Roaming\\NuGet\\NuGet.Config",
