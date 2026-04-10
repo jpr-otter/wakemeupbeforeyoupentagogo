@@ -22,9 +22,9 @@ namespace Pentago
             Play = new Play();
             MenuFrame.NavigationService.Navigate(Menu);
             InitializeButtons();
-            Board = new Board(squareButtons[0], squareButtons[1], squareButtons[2], squareButtons[3]);
+            Board = new Board();
             HideArrows();
-            Board.IsNotEnabled();
+            DisableBoard();
             BlackMovement = false;
         }
 
@@ -45,6 +45,62 @@ namespace Pentago
             };
         }
 
+        public void EnableBoard()
+        {
+            foreach (var quadrant in squareButtons)
+                foreach (var btn in quadrant)
+                    btn.IsEnabled = true;
+        }
+
+        public void DisableBoard()
+        {
+            foreach (var quadrant in squareButtons)
+                foreach (var btn in quadrant)
+                    btn.IsEnabled = false;
+        }
+
+        public void StartNewGame()
+        {
+            if (Board != null)
+            {
+                Board.RestartGame();
+                BlackMovement = false;
+                SyncBoardToUI();
+                EnableBoard();
+                HideArrows();
+            }
+            if (Play != null)
+            {
+                Play.ResetUI();
+            }
+        }
+
+        public void SyncBoardToUI()
+        {
+            for (int q = 0; q < 4; q++)
+            {
+                for (int i = 0; i < Board.RectSize; i++)
+                {
+                    StoneColor color = Board.Quadrants[q][i];
+                    if (color == StoneColor.Black) squareButtons[q][i].Background = Brushes.Black;
+                    else if (color == StoneColor.White) squareButtons[q][i].Background = Brushes.White;
+                    else squareButtons[q][i].Background = Brushes.Transparent;
+                }
+            }
+        }
+
+        private void CheckGameState()
+        {
+            var result = Board.CheckGameResult();
+            if (result != GameResult.None)
+            {
+                DisableBoard();
+                if (result == GameResult.Draw) Play.ShowWinner("Draw!");
+                else if (result == GameResult.WhiteWins) Play.ShowWinner("White won!");
+                else if (result == GameResult.BlackWins) Play.ShowWinner("Black won!");
+            }
+        }
+
         private void ButtonStone_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
@@ -52,20 +108,30 @@ namespace Pentago
                 return;
 
             ToggleStoneColor(button);
-            Board.IsNotEnabled();
-            ShowArrowsIfNoWinner();
+            DisableBoard();
+            
+            // Map button click backward to Board
+            for (int q = 0; q < 4; q++)
+            {
+                for (int i = 0; i < Board.RectSize; i++)
+                {
+                    if (squareButtons[q][i] == button)
+                    {
+                        Board.Quadrants[q][i] = button.Background == Brushes.Black ? StoneColor.Black : StoneColor.White;
+                    }
+                }
+            }
+
+            if (Board.CheckGameResult() == GameResult.None)
+                SetArrowsVisibility(Visibility.Visible);
+            else
+                CheckGameState();
         }
 
         private void ToggleStoneColor(Button button)
         {
             button.Background = BlackMovement ? Brushes.Black : Brushes.White;
             BlackMovement = !BlackMovement;
-        }
-
-        private void ShowArrowsIfNoWinner()
-        {
-            if (!Board.PresentWinner())
-                SetArrowsVisibility(Visibility.Visible);
         }
 
         private void SetArrowsVisibility(Visibility visibility)
@@ -78,19 +144,39 @@ namespace Pentago
         {
             HideArrows();
             Play.ChangeTurn();
-            Board.IsEnabled();
+            EnableBoard();
 
             var button = sender as Button;
-            var direction = button.Name[12] == 'N' ? "counterclockwise" : "clockwise";
+            var direction = button.Name[12] == 'N' ? RotationDirection.CounterClockwise : RotationDirection.Clockwise;
             var squareNumber = button.Name[11] - '1';
 
             Board.Rotation(direction, squareNumber);
+            SyncBoardToUI();
 
-            if (Board.PresentWinner()) return;
+            if (Board.CheckGameResult() != GameResult.None)
+            {
+                CheckGameState();
+                return;
+            }
 
             Application.Current.Dispatcher.Invoke(DispatcherPriority.Background, new Action(delegate { }));
             if (Menu.AgainstComputer)
+            {
+                DisableBoard();
                 Board.ComputerMoves();
+                SyncBoardToUI();
+                BlackMovement = false; // Next player turn is White
+                if (Board.CheckGameResult() == GameResult.None)
+                {
+                    EnableBoard();
+                    Play.ChangeTurn();
+                }
+                else
+                {
+                    CheckGameState();
+                    Play.ChangeTurn();
+                }
+            }
         }
 
         public static void HideArrows()

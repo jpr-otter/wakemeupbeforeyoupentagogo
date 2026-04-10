@@ -31,16 +31,29 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border CornerRadius="46" Background="{TemplateBinding Background}" BorderThickness="1">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center">
-                            </ContentPresenter>
-                        </Border>
+                        <Grid>
+                            <!-- Äußerer, leicht durchsichtiger Schattierungseffekt (gibt Tiefe) -->
+                            <Ellipse Fill="{TemplateBinding Background}" Stroke="#99000000" StrokeThickness="1"/>
+                            
+                            <!-- 3D Glanz-Effekt für runde Murmel-Optik -->
+                            <Ellipse Margin="3" Opacity="0.6">
+                                <Ellipse.Fill>
+                                    <RadialGradientBrush GradientOrigin="0.3,0.3" Center="0.5,0.5" RadiusX="0.5" RadiusY="0.5">
+                                        <GradientStop Color="White" Offset="0"/>
+                                        <GradientStop Color="Transparent" Offset="1"/>
+                                    </RadialGradientBrush>
+                                </Ellipse.Fill>
+                            </Ellipse>
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Grid>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Border.Background" Value="Transparent" />
+                    <Setter Property="Cursor" Value="Hand" />
+                    <!-- Sorgt dafür, dass leere Felder beim Hover leicht aufleuchten, aber die Steine normal bleiben -->
+                    <Setter Property="Opacity" Value="0.8"/>
                 </Trigger>
             </Style.Triggers>
         </Style>

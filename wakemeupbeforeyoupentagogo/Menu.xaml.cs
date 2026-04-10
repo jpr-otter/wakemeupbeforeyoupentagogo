@@ -33,12 +33,13 @@ namespace Pentago
 
         public void PlayerButton_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(MainWindow.Play);
-            MainWindow.Board.IsEnabled();
+            AgainstComputer = false;
             if ((sender as Button).Content.ToString() == "versus Computer")
             {
                 AgainstComputer = true;
             }
+            ((MainWindow)Application.Current.MainWindow).StartNewGame();
+            NavigationService.Navigate(MainWindow.Play);
         }
 
         private void Exit_Click(object sender, RoutedEventArgs e)

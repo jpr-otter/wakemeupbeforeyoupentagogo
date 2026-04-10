@@ -29,8 +29,8 @@ namespace Pentago
             if (MessageBox.Show("Progress will be lost.", "Pentago", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
                 NavigationService.Navigate(MainWindow.Menu);
-                MainWindow.Board.RestartGame(false);
-                MoveButton.Background = Brushes.White;
+                ((MainWindow)Application.Current.MainWindow).StartNewGame();
+                ((MainWindow)Application.Current.MainWindow).DisableBoard();
             }
 
         }
@@ -49,12 +49,19 @@ namespace Pentago
 
         }
 
-        private void RestartButton_Click(object sender, RoutedEventArgs e)
+        public void ResetUI()
         {
-            MainWindow.Board.RestartGame(true);
             MoveButton.Visibility = Visibility.Visible;
             MoveButton.Background = Brushes.White;
-            WhosTurnTextBlock.Text = "Turn of";
+            if (WhosTurnTextBlock != null)
+            {
+                WhosTurnTextBlock.Text = "Turn of";
+            }
+        }
+
+        private void RestartButton_Click(object sender, RoutedEventArgs e)
+        {
+            ((MainWindow)Application.Current.MainWindow).StartNewGame();
         }
 
         public void ShowWinner(string winner)

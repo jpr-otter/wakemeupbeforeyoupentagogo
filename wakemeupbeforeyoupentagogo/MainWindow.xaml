@@ -13,23 +13,39 @@
 
         <Style BasedOn="{StaticResource {x:Type Button}}" TargetType="Button" x:Key="ArrowTemplate">
             <EventSetter Event="Click" Handler="ButtonArrow_Click"/>
-            <Setter Property="Width" Value="80"/>
+            <Setter Property="Width" Value="60"/>
             <Setter Property="Height" Value="60"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="Background" Value="#33000000"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Padding" Value="8"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
-                        <Border Background="{TemplateBinding Background}" BorderBrush="Transparent" BorderThickness="1">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <Border x:Name="border" CornerRadius="30" Background="{TemplateBinding Background}" BorderBrush="Black" BorderThickness="1" Padding="{TemplateBinding Padding}">
+                            <Viewbox Stretch="Uniform">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Viewbox>
                         </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#88000000" />
+                                <Setter Property="Cursor" Value="Hand"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#AA000000" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
     </Window.Resources>
 
-    <Grid>
+    <Grid ClipToBounds="False">
         <Frame x:Name="MenuFrame" Margin="514,10,10,10" NavigationUIVisibility="Hidden"/>
-        <Image Source="/assets/grid.png" Width="400" Height="400" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="60 60 10 10"/>
+        <Image Source="/assets/grid.png" Width="400" Height="450" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="60 60 10 10"/>
 
         <Button Style="{StaticResource BallTemplate}" Click="ButtonStone_Click" x:Name="Button11"  HorizontalAlignment="Left" Margin="72,70,0,0" VerticalAlignment="Top"/>
         <Button Style="{StaticResource BallTemplate}" Click="ButtonStone_Click" x:Name="Button12"  HorizontalAlignment="Left" Margin="136,70,0,0" VerticalAlignment="Top"/>
@@ -71,7 +87,7 @@
         <Button Style="{StaticResource BallTemplate}" Click="ButtonStone_Click" x:Name="Button48"  HorizontalAlignment="Left" Margin="338,400,0,0" VerticalAlignment="Top"/>
         <Button Style="{StaticResource BallTemplate}" Click="ButtonStone_Click" x:Name="Button49"  HorizontalAlignment="Left" Margin="401.5,400,0,0" VerticalAlignment="Top"/>
 
-        <Button Style="{StaticResource ArrowTemplate}" x:Name="ButtonArrow1C" Background="Transparent" Margin="-4,115,723,409" RenderTransformOrigin="0.5,0.5"  Width="81" Height="60">
+        <Button Style="{StaticResource ArrowTemplate}" x:Name="ButtonArrow1C" Background="Transparent" Margin="-1,63,0,0" RenderTransformOrigin="0.5,0.5">
             <Button.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -83,16 +99,15 @@
             <Image Source="/assets/arrow.png"/>
         </Button>
 
-        <Button Style="{StaticResource ArrowTemplate}" x:Name="ButtonArrow1N" Background="Transparent" Margin="102,7,618,517">
+        <Button Style="{StaticResource ArrowTemplate}" x:Name="ButtonArrow1N" Background="Transparent" Margin="63,1,0,0">
             <Image Source="/assets/arrowMirror.png"/>
         </Button>
 
-        <Button Style="{StaticResource ArrowTemplate}" x:Name="ButtonArrow2C" Background="Transparent" Margin="338,7,382,517">
+        <Button Style="{StaticResource ArrowTemplate}" x:Name="ButtonArrow2C" Background="Transparent" Margin="399,1,0,0">
             <Image Source="/assets/arrow.png" />
         </Button>
 
-
-        <Button Style="{StaticResource ArrowTemplate}" x:Name="ButtonArrow3C" Background="Transparent" Margin="104,458,616,66">
+        <Button Style="{StaticResource ArrowTemplate}" x:Name="ButtonArrow3C" Background="Transparent" Margin="62,460,0,0">
             <Image Source="/assets/arrow.png" Margin="0 0 4 -2" RenderTransformOrigin="0.5,0.5" >
                 <Image.RenderTransform>
                     <TransformGroup>
@@ -105,7 +120,7 @@
             </Image>
         </Button>
 
-        <Button Style="{StaticResource ArrowTemplate}" x:Name="ButtonArrow4C" Background="Transparent" Margin="447,414,272,110" RenderTransformOrigin="0.5,0.5"  Width="81" Height="60">
+        <Button Style="{StaticResource ArrowTemplate}" x:Name="ButtonArrow4C" Background="Transparent" Margin="460,399,0,0" RenderTransformOrigin="0.5,0.5">
             <Button.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -118,7 +133,7 @@
         </Button>
 
 
-        <Button Style="{StaticResource ArrowTemplate}" x:Name="ButtonArrow2N" Background="Transparent" Margin="446,118,274,406" RenderTransformOrigin="0.5,0.5">
+        <Button Style="{StaticResource ArrowTemplate}" x:Name="ButtonArrow2N" Background="Transparent" Margin="460,62,0,0" RenderTransformOrigin="0.5,0.5">
             <Button.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -130,7 +145,7 @@
             <Image Source="/assets/arrowMirror.png" Margin="0 0 4 -2"/>
         </Button>
 
-        <Button Style="{StaticResource ArrowTemplate}" x:Name="ButtonArrow4N" Background="Transparent" Margin="335,459,385,65" RenderTransformOrigin="0.5,0.5">
+        <Button Style="{StaticResource ArrowTemplate}" x:Name="ButtonArrow4N" Background="Transparent" Margin="399,460,0,0" RenderTransformOrigin="0.5,0.5">
             <Button.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -141,7 +156,7 @@
             </Button.RenderTransform>
             <Image Source="/assets/arrowMirror.png" Margin="0 0 4 -2"/>
         </Button>
-        <Button Style="{StaticResource ArrowTemplate}" x:Name="ButtonArrow3N" Background="Transparent" Margin="-3,410,723,114" RenderTransformOrigin="0.5,0.5">
+        <Button Style="{StaticResource ArrowTemplate}" x:Name="ButtonArrow3N" Background="Transparent" Margin="0,399,0,0" RenderTransformOrigin="0.5,0.5">
             <Button.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>

@@ -4,16 +4,16 @@
 winexe
 C#
 .cs
-C:\Users\Jenny\Source\Repos\wakemeupbeforeyoupentagogo2\wakemeupbeforeyoupentagogo\obj\Debug\net7.0-windows\
+D:\source\repos\wakemeupbeforeoyoupentagogo\wakemeupbeforeyoupentagogo\wakemeupbeforeyoupentagogo\obj\Debug\net7.0-windows\
 wakemeupbeforeyoupentagogo
 none
 false
-TRACE;DEBUG;NET;NET7_0;NETCOREAPP
-C:\Users\Jenny\Source\Repos\wakemeupbeforeyoupentagogo2\wakemeupbeforeyoupentagogo\App.xaml
+TRACE;DEBUG;NET;NET7_0;NETCOREAPP;WINDOWS;WINDOWS7_0;NET5_0_OR_GREATER;NET6_0_OR_GREATER;NET7_0_OR_GREATER;NETCOREAPP3_0_OR_GREATER;NETCOREAPP3_1_OR_GREATER;WINDOWS7_0_OR_GREATER
+D:\source\repos\wakemeupbeforeoyoupentagogo\wakemeupbeforeyoupentagogo\wakemeupbeforeyoupentagogo\App.xaml
 31498342033
 
 6-75442549
-198-306949569
+198-1133866272
 MainWindow.xaml;Menu.xaml;Play.xaml;
 
 False

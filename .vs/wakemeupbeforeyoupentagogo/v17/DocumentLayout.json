@@ -1,0 +1,129 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\source\\repos\\wakemeupbeforeoyoupentagogo\\wakemeupbeforeyoupentagogo\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{08F5A10F-6D31-44E4-B910-D45522393D30}|wakemeupbeforeyoupentagogo\\wakemeupbeforeyoupentagogo.csproj|d:\\source\\repos\\wakemeupbeforeoyoupentagogo\\wakemeupbeforeyoupentagogo\\wakemeupbeforeyoupentagogo\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{08F5A10F-6D31-44E4-B910-D45522393D30}|wakemeupbeforeyoupentagogo\\wakemeupbeforeyoupentagogo.csproj|solutionrelative:wakemeupbeforeyoupentagogo\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{08F5A10F-6D31-44E4-B910-D45522393D30}|wakemeupbeforeyoupentagogo\\wakemeupbeforeyoupentagogo.csproj|d:\\source\\repos\\wakemeupbeforeoyoupentagogo\\wakemeupbeforeyoupentagogo\\wakemeupbeforeyoupentagogo\\board.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{08F5A10F-6D31-44E4-B910-D45522393D30}|wakemeupbeforeyoupentagogo\\wakemeupbeforeyoupentagogo.csproj|solutionrelative:wakemeupbeforeyoupentagogo\\board.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{08F5A10F-6D31-44E4-B910-D45522393D30}|wakemeupbeforeyoupentagogo\\wakemeupbeforeyoupentagogo.csproj|d:\\source\\repos\\wakemeupbeforeoyoupentagogo\\wakemeupbeforeyoupentagogo\\wakemeupbeforeyoupentagogo\\play.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{08F5A10F-6D31-44E4-B910-D45522393D30}|wakemeupbeforeyoupentagogo\\wakemeupbeforeyoupentagogo.csproj|solutionrelative:wakemeupbeforeyoupentagogo\\play.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{08F5A10F-6D31-44E4-B910-D45522393D30}|wakemeupbeforeyoupentagogo\\wakemeupbeforeyoupentagogo.csproj|d:\\source\\repos\\wakemeupbeforeoyoupentagogo\\wakemeupbeforeyoupentagogo\\wakemeupbeforeyoupentagogo\\menu.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{08F5A10F-6D31-44E4-B910-D45522393D30}|wakemeupbeforeyoupentagogo\\wakemeupbeforeyoupentagogo.csproj|solutionrelative:wakemeupbeforeyoupentagogo\\menu.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{08F5A10F-6D31-44E4-B910-D45522393D30}|wakemeupbeforeyoupentagogo\\wakemeupbeforeyoupentagogo.csproj|d:\\source\\repos\\wakemeupbeforeoyoupentagogo\\wakemeupbeforeyoupentagogo\\wakemeupbeforeyoupentagogo\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{08F5A10F-6D31-44E4-B910-D45522393D30}|wakemeupbeforeyoupentagogo\\wakemeupbeforeyoupentagogo.csproj|solutionrelative:wakemeupbeforeyoupentagogo\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{08F5A10F-6D31-44E4-B910-D45522393D30}|wakemeupbeforeyoupentagogo\\wakemeupbeforeyoupentagogo.csproj|d:\\source\\repos\\wakemeupbeforeoyoupentagogo\\wakemeupbeforeyoupentagogo\\wakemeupbeforeyoupentagogo\\play.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{08F5A10F-6D31-44E4-B910-D45522393D30}|wakemeupbeforeyoupentagogo\\wakemeupbeforeyoupentagogo.csproj|solutionrelative:wakemeupbeforeyoupentagogo\\play.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{e506b91c-c606-466a-90a9-123d1d1e12b3}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Play.xaml",
+              "DocumentMoniker": "D:\\source\\repos\\wakemeupbeforeoyoupentagogo\\wakemeupbeforeyoupentagogo\\wakemeupbeforeyoupentagogo\\Play.xaml",
+              "RelativeDocumentMoniker": "wakemeupbeforeyoupentagogo\\Play.xaml",
+              "ToolTip": "D:\\source\\repos\\wakemeupbeforeoyoupentagogo\\wakemeupbeforeyoupentagogo\\wakemeupbeforeyoupentagogo\\Play.xaml",
+              "RelativeToolTip": "wakemeupbeforeyoupentagogo\\Play.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-04-10T11:58:49.703Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "MainWindow.xaml",
+              "DocumentMoniker": "D:\\source\\repos\\wakemeupbeforeoyoupentagogo\\wakemeupbeforeyoupentagogo\\wakemeupbeforeyoupentagogo\\MainWindow.xaml",
+              "RelativeDocumentMoniker": "wakemeupbeforeyoupentagogo\\MainWindow.xaml",
+              "ToolTip": "D:\\source\\repos\\wakemeupbeforeoyoupentagogo\\wakemeupbeforeyoupentagogo\\wakemeupbeforeyoupentagogo\\MainWindow.xaml",
+              "RelativeToolTip": "wakemeupbeforeyoupentagogo\\MainWindow.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-04-10T11:58:49.804Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "MainWindow.xaml.cs",
+              "DocumentMoniker": "D:\\source\\repos\\wakemeupbeforeoyoupentagogo\\wakemeupbeforeyoupentagogo\\wakemeupbeforeyoupentagogo\\MainWindow.xaml.cs",
+              "RelativeDocumentMoniker": "wakemeupbeforeyoupentagogo\\MainWindow.xaml.cs",
+              "ToolTip": "D:\\source\\repos\\wakemeupbeforeoyoupentagogo\\wakemeupbeforeyoupentagogo\\wakemeupbeforeyoupentagogo\\MainWindow.xaml.cs",
+              "RelativeToolTip": "wakemeupbeforeyoupentagogo\\MainWindow.xaml.cs",
+              "ViewState": "AQIAAEoAAAAAAAAAAAAtwB4AAAAoAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-10T11:58:49.807Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Play.xaml.cs",
+              "DocumentMoniker": "D:\\source\\repos\\wakemeupbeforeoyoupentagogo\\wakemeupbeforeyoupentagogo\\wakemeupbeforeyoupentagogo\\Play.xaml.cs",
+              "RelativeDocumentMoniker": "wakemeupbeforeyoupentagogo\\Play.xaml.cs",
+              "ToolTip": "D:\\source\\repos\\wakemeupbeforeoyoupentagogo\\wakemeupbeforeyoupentagogo\\wakemeupbeforeyoupentagogo\\Play.xaml.cs",
+              "RelativeToolTip": "wakemeupbeforeyoupentagogo\\Play.xaml.cs",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAAACoAAAANAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-10T11:58:49.81Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Menu.xaml.cs",
+              "DocumentMoniker": "D:\\source\\repos\\wakemeupbeforeoyoupentagogo\\wakemeupbeforeyoupentagogo\\wakemeupbeforeyoupentagogo\\Menu.xaml.cs",
+              "RelativeDocumentMoniker": "wakemeupbeforeyoupentagogo\\Menu.xaml.cs",
+              "ToolTip": "D:\\source\\repos\\wakemeupbeforeoyoupentagogo\\wakemeupbeforeyoupentagogo\\wakemeupbeforeyoupentagogo\\Menu.xaml.cs",
+              "RelativeToolTip": "wakemeupbeforeyoupentagogo\\Menu.xaml.cs",
+              "ViewState": "AQIAAAkAAAAAAAAAAAAAADEAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-10T11:58:49.812Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Board.cs",
+              "DocumentMoniker": "D:\\source\\repos\\wakemeupbeforeoyoupentagogo\\wakemeupbeforeyoupentagogo\\wakemeupbeforeyoupentagogo\\Board.cs",
+              "RelativeDocumentMoniker": "wakemeupbeforeyoupentagogo\\Board.cs",
+              "ToolTip": "D:\\source\\repos\\wakemeupbeforeoyoupentagogo\\wakemeupbeforeyoupentagogo\\wakemeupbeforeyoupentagogo\\Board.cs",
+              "RelativeToolTip": "wakemeupbeforeyoupentagogo\\Board.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEIBAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-10T11:58:49.814Z"
+            }
+          ]
+        },
+        {
+          "DockedWidth": 29,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

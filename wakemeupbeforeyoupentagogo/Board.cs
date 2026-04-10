@@ -1,246 +1,145 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media;
-using wakemeupbeforeyoupentagogo;
 
 namespace Pentago
 {
+    public enum StoneColor { None, Black, White }
+    public enum RotationDirection { Clockwise, CounterClockwise }
+    public enum GameResult { None, BlackWins, WhiteWins, Draw }
+
     public class Board
     {
-        private Button[][] rectButton;
-        private Button[] allRects;
-        private Button blackMoveButton;
+        public StoneColor[][] Quadrants { get; private set; }
         private int[] blackMoveRotation;
-        static int rectSize = 9;
 
-        public Board(Button[] topRowButtons, Button[] secondRowButtons, Button[] thirdRowButtons, Button[] bottomRowButtons)
+        private int compMoveQuadrant;
+        private int compMoveSquare;
+
+        public const int RectSize = 9;
+
+        public Board()
         {
-            rectButton = new Button[4][];
-            rectButton[0] = topRowButtons;
-            rectButton[1] = secondRowButtons;
-            rectButton[2] = thirdRowButtons;
-            rectButton[3] = bottomRowButtons;
-            blackMoveButton = new Button();
+            Quadrants = new StoneColor[4][];
             blackMoveRotation = new int[2];
-            allRects = new Button[rectSize * 4];
-
-            for (int quadrant = 0; quadrant < 2; quadrant++)
-            {
-                for (int row = 0; row < 3; row++)
-                {
-                    for (int column = 0; column < 3; column++)
-                    {
-                        allRects[column + (row * 6) + (18 * quadrant)] = rectButton[2 * quadrant][column + (row * 3)];
-                    }
-                    for (int column = 0; column < 3; column++)
-                    {
-                        allRects[column + 3 + (row * 6) + (18 * quadrant)] = rectButton[2 * quadrant + 1][column + (row * 3)];
-                    }
-                }
-            }
+            for (int i = 0; i < 4; i++)
+                Quadrants[i] = new StoneColor[RectSize];
         }
 
-        public void IsNotEnabled()
+        public StoneColor GetFlatColor(int flatIndex)
         {
-
-            foreach (Button[] squares in rectButton)
-            {
-                foreach (Button stone in squares)
-                {
-                    stone.IsEnabled = false;
-                }
-            }
-        }
-        public void IsEnabled()
-        {
-
-            foreach (Button[] squares in rectButton)
-            {
-                foreach (Button stone in squares)
-                {
-                    stone.IsEnabled = true;
-                }
-            }
+            int row = flatIndex / 6;
+            int col = flatIndex % 6;
+            int q = (row / 3) * 2 + (col / 3);
+            int sq = (row % 3) * 3 + (col % 3);
+            return Quadrants[q][sq];
         }
 
-        public void Rotation(string direction, int square)
+        public void SetFlatColor(int flatIndex, StoneColor color)
         {
-            Brush[] copySquare = new Brush[rectSize];
-            for (int i = 0; i < rectSize; i++)
-            {
-                copySquare[i] = rectButton[square][i].Background;
-            }
+            int row = flatIndex / 6;
+            int col = flatIndex % 6;
+            int q = (row / 3) * 2 + (col / 3);
+            int sq = (row % 3) * 3 + (col % 3);
+            Quadrants[q][sq] = color;
+        }
 
-            if (direction.Equals("counterclockwise", StringComparison.OrdinalIgnoreCase))
-            {
+        public void Rotation(RotationDirection direction, int square)
+        {
+            StoneColor[] copySquare = new StoneColor[RectSize];
+            for (int i = 0; i < RectSize; i++)
+                copySquare[i] = Quadrants[square][i];
+
+            if (direction == RotationDirection.CounterClockwise)
                 RotateCounterClockwise(square, copySquare);
-            }
-            else if (direction.Equals("clockwise", StringComparison.OrdinalIgnoreCase))
-            {
+            else if (direction == RotationDirection.Clockwise)
                 RotateClockwise(square, copySquare);
-            }
-            else
-            {
-                throw new ArgumentException("Invalid rotation direction. Use 'clockwise' or 'counterclockwise'.");
-            }
         }
 
-        private void RotateCounterClockwise(int square, Brush[] copySquare)
+        private void RotateCounterClockwise(int square, StoneColor[] copySquare)
         {
             int index = 0;
             for (int row = 0; row < 3; row++)
-            {
                 for (int col = 6; col >= 0; col -= 3)
-                {
-                    rectButton[square][col + row].Background = copySquare[index++];
-                }
-            }
+                    Quadrants[square][col + row] = copySquare[index++];
         }
 
-        private void RotateClockwise(int square, Brush[] copySquare)
+        private void RotateClockwise(int square, StoneColor[] copySquare)
         {
             int index = 0;
             for (int row = 0; row < 3; row++)
-            {
                 for (int col = 6; col >= 0; col -= 3)
-                {
-                    rectButton[square][index++].Background = copySquare[row + col];
-                }
-            }
-        }        
+                    Quadrants[square][index++] = copySquare[row + col];
+        }
 
-        public bool CheckWinningCondition(Brush color)
+        public bool CheckWinningCondition(StoneColor color)
         {
-            
             for (int row = 0; row < 6; row++)
-            {
                 for (int col = 0; col <= 1; col++)
-                {
-                    if (CheckLine(color, row * 6 + col, 1))
-                        return true;
-                }
-            }
+                    if (CheckLine(color, row * 6 + col, 1)) return true;
 
-            
             for (int col = 0; col < 6; col++)
-            {
                 for (int row = 0; row <= 1; row++) 
-                {
-                    if (CheckLine(color, row * 6 + col, 6))
-                        return true;
-                }
-            }
+                    if (CheckLine(color, row * 6 + col, 6)) return true;
 
-            
             for (int row = 0; row <= 1; row++)
-            {
                 for (int col = 0; col <= 1; col++)
                 {
-                    if (CheckLine(color, row * 6 + col, 7))
-                        return true;
-                    if (CheckLine(color, row * 6 + (5 - col), 5))
-                        return true;
+                    if (CheckLine(color, row * 6 + col, 7)) return true;
+                    if (CheckLine(color, row * 6 + (5 - col), 5)) return true;
                 }
-            }
-
             return false;
         }
 
-        private bool CheckLine(Brush color, int startIndex, int step)
+        private bool CheckLine(StoneColor color, int startIndex, int step)
         {
             int stoneInPosition = 0;
-
             for (int i = 0; i < 5; i++)
             {
-                if (allRects[startIndex + i * step].Background == color)
+                if (GetFlatColor(startIndex + i * step) == color)
                 {
                     stoneInPosition++;
-                    if (stoneInPosition == 5) 
-                        return true;
+                    if (stoneInPosition == 5) return true;
                 }
-                else
-                {
-                    stoneInPosition = 0;
-                }
+                else stoneInPosition = 0;
             }
-
             return false;
         }
 
         public bool IsBoardFull()
         {
-            foreach (Button stone in allRects)
-            {
-                if (stone.Background == Brushes.Transparent) return false;
-            }
+            for (int i = 0; i < 36; i++)
+                if (GetFlatColor(i) == StoneColor.None) return false;
             return true;
         }
 
-        public bool PresentWinner()
+        public GameResult CheckGameResult()
         {
-            bool whiteWins = CheckWinningCondition(Brushes.White);
-            bool blackWins = CheckWinningCondition(Brushes.Black);
-            if (whiteWins == true && blackWins == true)
-            {
-                MainWindow.Play.ShowWinner("Draw!");
-                IsNotEnabled();
-                return true;
-            }
-            else if (whiteWins)
-            {
-                MainWindow.Play.ShowWinner("White won!");
-                IsNotEnabled();
-                return true;
-            }
-            else if (blackWins)
-            {
-                MainWindow.Play.ShowWinner("Black won!");
-                IsNotEnabled();
-                return true;
-            }
-            else if (IsBoardFull())
-            {
-                MainWindow.Play.ShowWinner("Draw!");
-                IsNotEnabled();
-                return true;
-            }
-            return false;
+            bool whiteWins = CheckWinningCondition(StoneColor.White);
+            bool blackWins = CheckWinningCondition(StoneColor.Black);
+            if (whiteWins && blackWins) return GameResult.Draw;
+            if (whiteWins) return GameResult.WhiteWins;
+            if (blackWins) return GameResult.BlackWins;
+            if (IsBoardFull()) return GameResult.Draw;
+            return GameResult.None;
         }
 
-        public void RestartGame(bool restartGame)
+        public void RestartGame()
         {
-            MainWindow.BlackMovement = false;
-            foreach (Button stone in allRects)
-            {
-                stone.Background = Brushes.Transparent;
-            }
-            MainWindow.HideArrows();
-            if (restartGame)
-            {
-                IsEnabled();
-            }
-            else IsNotEnabled();
+            for (int q = 0; q < 4; q++)
+                for (int i = 0; i < RectSize; i++)
+                    Quadrants[q][i] = StoneColor.None;
         }
 
         public void ComputerTurns()
         {
-            if (ThreeInLine(Brushes.White))
-            {
-                return;
-            }
+            if (ThreeInLine(StoneColor.White)) return;
             for (int i = 0; i < 4; i++)
             {
-                if (rectButton[i][4].Background == Brushes.Transparent)
+                if (Quadrants[i][4] == StoneColor.None)
                 {
-                    rectButton[i][4].Background = Brushes.Black;
-                    blackMoveButton = rectButton[i][4];
+                    Quadrants[i][4] = StoneColor.Black;
+                    compMoveQuadrant = i;
+                    compMoveSquare = 4;
                     return;
                 }
             }
@@ -248,10 +147,11 @@ namespace Pentago
             while (true)
             {
                 int number = random.Next(36);
-                if (allRects[number].Background == Brushes.Transparent)
+                if (GetFlatColor(number) == StoneColor.None)
                 {
-                    allRects[number].Background = Brushes.Black;
-                    blackMoveButton = allRects[number];
+                    SetFlatColor(number, StoneColor.Black);
+                    compMoveQuadrant = (number / 6 / 3) * 2 + ((number % 6) / 3);
+                    compMoveSquare = ((number / 6) % 3) * 3 + ((number % 6) % 3);
                     break;
                 }
             }
@@ -259,51 +159,45 @@ namespace Pentago
 
         public void ComputerTurnsArrow()
         {
-
             Random random = new Random();
             int direction = random.Next(2);
             int square = random.Next(4);
             blackMoveRotation[0] = direction;
             blackMoveRotation[1] = square;
-            if (direction == 0) Rotation("counterclockwise", square);
-            else Rotation("clockwise", square);
-            IsEnabled();
+            if (direction == 0) Rotation(RotationDirection.CounterClockwise, square);
+            else Rotation(RotationDirection.Clockwise, square);
         }
 
         private bool CheckWinnerWhite()
         {
-            foreach (Button stone in allRects)
+            for (int flat = 0; flat < 36; flat++)
             {
-                if (stone.Background == Brushes.Transparent)
+                if (GetFlatColor(flat) == StoneColor.None)
                 {
-                    stone.Background = Brushes.White;
+                    SetFlatColor(flat, StoneColor.White);
                     for (int i = 0; i < 4; i++)
                     {
-                        Rotation("counterclockwise", i);
-                        if (CheckWinningCondition(Brushes.White))
+                        Rotation(RotationDirection.CounterClockwise, i);
+                        if (CheckWinningCondition(StoneColor.White))
                         {
-                            Rotation("clockwise", i);
-                            stone.Background = Brushes.Transparent;
+                            Rotation(RotationDirection.Clockwise, i);
+                            SetFlatColor(flat, StoneColor.None);
                             return true;
                         }
                         else
                         {
-                            Rotation("clockwise", i);
-                            Rotation("clockwise", i);
-                            if (CheckWinningCondition(Brushes.Black))
+                            Rotation(RotationDirection.Clockwise, i);
+                            Rotation(RotationDirection.Clockwise, i);
+                            if (CheckWinningCondition(StoneColor.Black))
                             {
-                                Rotation("counterclockwise", i);
-                                stone.Background = Brushes.Transparent;
+                                Rotation(RotationDirection.CounterClockwise, i);
+                                SetFlatColor(flat, StoneColor.None);
                                 return true;
                             }
-                            else
-                            {
-                                Rotation("counterclockwise", i);
-
-                            }
+                            else Rotation(RotationDirection.CounterClockwise, i);
                         }
                     }
-                    stone.Background = Brushes.Transparent;
+                    SetFlatColor(flat, StoneColor.None);
                 }
             }
             return false;
@@ -311,112 +205,90 @@ namespace Pentago
 
         public void WhiteWins()
         {
-
-            if (CheckWinnerWhite() == false) return;
-            blackMoveButton.Background = Brushes.Transparent;
-            if (blackMoveRotation[0] == 0)
-            {
-                Rotation("clockwise", blackMoveRotation[1]);
-            }
-            else
-            {
-                Rotation("counterclockwise", blackMoveRotation[1]);
-            }
+            if (!CheckWinnerWhite()) return;
+            Quadrants[compMoveQuadrant][compMoveSquare] = StoneColor.None;
+            if (blackMoveRotation[0] == 0) Rotation(RotationDirection.Clockwise, blackMoveRotation[1]);
+            else Rotation(RotationDirection.CounterClockwise, blackMoveRotation[1]);
+            
             bool notWin;
-            foreach (Button BlackStone in allRects)
+            for (int flatBlack = 0; flatBlack < 36; flatBlack++)
             {
-                if (BlackStone.Background == Brushes.Transparent)
+                if (GetFlatColor(flatBlack) == StoneColor.None)
                 {
-                    BlackStone.Background = Brushes.Black;
+                    SetFlatColor(flatBlack, StoneColor.Black);
                     for (int j = 0; j < 4; j++)
                     {
                         notWin = true;
                         for (int k = 0; k < 2; k++)
                         {
-                            if (k == 0)
+                            if (k == 0) Rotation(RotationDirection.Clockwise, j);
+                            else { Rotation(RotationDirection.CounterClockwise, j); Rotation(RotationDirection.CounterClockwise, j); }
+                            
+                            for (int flatWhite = 0; flatWhite < 36; flatWhite++)
                             {
-                                Rotation("clockwise", j);
-                            }
-                            else
-                            {
-                                Rotation("counterclockwise", j);
-                                Rotation("counterclockwise", j);
-                            }
-                            foreach (Button WhiteStone in allRects)
-                            {
-                                if (WhiteStone.Background == Brushes.Transparent)
+                                if (GetFlatColor(flatWhite) == StoneColor.None)
                                 {
-                                    WhiteStone.Background = Brushes.White;
+                                    SetFlatColor(flatWhite, StoneColor.White);
                                     for (int i = 0; i < 4; i++)
                                     {
-                                        Rotation("counterclockwise", i);
-                                        if (CheckWinningCondition(Brushes.White))
+                                        Rotation(RotationDirection.CounterClockwise, i);
+                                        if (CheckWinningCondition(StoneColor.White))
                                         {
                                             notWin = false;
-                                            Rotation("clockwise", i);
+                                            Rotation(RotationDirection.Clockwise, i);
                                         }
                                         else
                                         {
-                                            Rotation("clockwise", i);
-                                            Rotation("clockwise", i);
-                                            if (CheckWinningCondition(Brushes.White))
-                                            {
-                                                notWin = false;
-                                            }
-                                            Rotation("counterclockwise", i);
+                                            Rotation(RotationDirection.Clockwise, i);
+                                            Rotation(RotationDirection.Clockwise, i);
+                                            if (CheckWinningCondition(StoneColor.White)) notWin = false;
+                                            Rotation(RotationDirection.CounterClockwise, i);
                                         }
                                     }
-                                    WhiteStone.Background = Brushes.Transparent;
+                                    SetFlatColor(flatWhite, StoneColor.None);
                                 }
                             }
-                            if (notWin == true)
-                            {
-                                return;
-                            }
-                            if (k == 1)
-                            {
-                                Rotation("clockwise", j);
-                            }
-
+                            if (notWin) return;
+                            if (k == 1) Rotation(RotationDirection.Clockwise, j);
                         }
                     }
-                    BlackStone.Background = Brushes.Transparent;
+                    SetFlatColor(flatBlack, StoneColor.None);
                 }
             }
-            blackMoveButton.Background = Brushes.Black;
-            Rotation("clockwise", 2);
+            Quadrants[compMoveQuadrant][compMoveSquare] = StoneColor.Black;
+            Rotation(RotationDirection.Clockwise, 2);
         }
 
         public bool BlackWins()
         {
-            foreach (Button stone in allRects)
+            for (int flat = 0; flat < 36; flat++)
             {
-                if (stone.Background == Brushes.Transparent)
+                if (GetFlatColor(flat) == StoneColor.None)
                 {
-                    stone.Background = Brushes.Black;
+                    SetFlatColor(flat, StoneColor.Black);
                     for (int i = 0; i < 4; i++)
                     {
-                        Rotation("counterclockwise", i);
-                        if (CheckWinningCondition(Brushes.Black))
+                        Rotation(RotationDirection.CounterClockwise, i);
+                        if (CheckWinningCondition(StoneColor.Black))
                         {
+                            SetFlatColor(flat, StoneColor.None);
+                            Rotation(RotationDirection.Clockwise, i); // UNDO rotation correctly
                             return true;
                         }
                         else
                         {
-                            Rotation("clockwise", i);
-                            Rotation("clockwise", i);
-                            if (CheckWinningCondition(Brushes.Black))
+                            Rotation(RotationDirection.Clockwise, i);
+                            Rotation(RotationDirection.Clockwise, i);
+                            if (CheckWinningCondition(StoneColor.Black))
                             {
+                                SetFlatColor(flat, StoneColor.None);
+                                Rotation(RotationDirection.CounterClockwise, i); // UNDO rotation correctly
                                 return true;
                             }
-                            else
-                            {
-                                Rotation("counterclockwise", i);
-
-                            }
+                            else Rotation(RotationDirection.CounterClockwise, i);
                         }
                     }
-                    stone.Background = Brushes.Transparent;
+                    SetFlatColor(flat, StoneColor.None);
                 }
             }
             return false;
@@ -424,31 +296,24 @@ namespace Pentago
 
         public void ComputerMoves()
         {
-            IsNotEnabled();
-            MainWindow.BlackMovement = !MainWindow.BlackMovement;
             if (!BlackWins())
             {
                 ComputerTurns();
                 ComputerTurnsArrow();
                 WhiteWins();
             }
-            PresentWinner();
-            MainWindow.Play.ChangeTurn();
         }
 
-        public bool ThreeInLine(Brush colorInLine)
+        public bool ThreeInLine(StoneColor colorInLine)
         {
             for (int i = 0; i < 4; i++)
             {
-                if (CheckAndCompleteLine(i, colorInLine))
-                {
-                    return true;
-                }
+                if (CheckAndCompleteLine(i, colorInLine)) return true;
             }
             return false;
         }
 
-        private bool CheckAndCompleteLine(int index, Brush colorInLine)
+        private bool CheckAndCompleteLine(int index, StoneColor colorInLine)
         {
             int[][] patterns = new int[][]
             {
@@ -456,29 +321,21 @@ namespace Pentago
                 new[] { 0, 3, 6 }, new[] { 1, 4, 7 }, new[] { 2, 5, 8 }, 
                 new[] { 0, 4, 8 }, new[] { 2, 4, 6 }                      
             };
-
             foreach (var pattern in patterns)
-            {
-                if (TryCompletePattern(index, pattern, colorInLine))
-                {
-                    return true;
-                }
-            }
-
+                if (TryCompletePattern(index, pattern, colorInLine)) return true;
             return false;
         }
 
-        private bool TryCompletePattern(int index, int[] positions, Brush colorInLine)
+        private bool TryCompletePattern(int index, int[] positions, StoneColor colorInLine)
         {
-            Button[] buttons = rectButton[index];
-            int countColorInLine = positions.Count(pos => buttons[pos].Background == colorInLine);
-            int countTransparent = positions.Count(pos => buttons[pos].Background == Brushes.Transparent);
-
-            if (countColorInLine == 2 && countTransparent == 1)
+            int countColorInLine = positions.Count(pos => Quadrants[index][pos] == colorInLine);
+            int countNone = positions.Count(pos => Quadrants[index][pos] == StoneColor.None);
+            if (countColorInLine == 2 && countNone == 1)
             {
-                int transparentPosition = positions.First(pos => buttons[pos].Background == Brushes.Transparent);
-                buttons[transparentPosition].Background = Brushes.Black;
-                blackMoveButton = buttons[transparentPosition];
+                int nonePos = positions.First(pos => Quadrants[index][pos] == StoneColor.None);
+                Quadrants[index][nonePos] = StoneColor.Black;
+                compMoveQuadrant = index;
+                compMoveSquare = nonePos;
                 return true;
             }
             return false;
